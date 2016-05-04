@@ -1,0 +1,68 @@
+
+/*Information-boxes */
+div.information {
+    float: right;
+    margin-right: 20px;
+    border-style: solid;
+    border-color: darkgrey;
+
+    padding:0 20px;
+    height: 500px;
+    width: 350px;
+}
+div.information2 {
+    float: right;
+    margin-right: 20px;
+    border-style: solid;
+    border-color: darkgrey;
+
+    padding:0 20px;
+    height: 600px;
+    width: 350px;
+}
+
+/*The css for the welcoming line. */
+#welcomeline {
+    margin-left: 400px;
+}
+/*Info-line on the information box. */
+#info {
+    margin-left: 20px;
+    font-family: "Open Sans",sans-serif;
+
+    font-size: 23px;
+}
+/*Used on all the pages.*/
+div.wrap {
+    float: left;
+
+}
+/*line used for different information */
+#line {
+    margin-left: 20px;
+}
+
+
+
+/*the welcome menu*/
+#welcomemenu {
+    float: left;
+    margin-left: 20px;
+
+    border-style: hidden;
+    border-color: none;
+
+    padding:0 20px;
+    height: 470px;
+    width: 500px;
+}
+
+/*the welcome line.*/
+#feed-welcome-line {
+    margin-left: 25%;
+}
+
+/*decorates text with an underline*/
+#underline {
+    text-decoration: underline;
+}
