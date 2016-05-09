@@ -12,11 +12,11 @@
 	<h4> Add new Instagram Feed.</h4>
 	<p> To convert Instagram feeds to JSON-text, you need to have access to your instagrams client ID and client secret.
 		Simply copy and paste this information to the respective fields on the Instagram submenu-page.
-		You can name the feed anything you want, the JSON-information and data about access-tokens will be saved in the database. </p>
+		apart from the instagram settings, the JSON-information and data about access-tokens will be saved in the database. </p>
 
-	<h4> Edit a instagram-feed.</h4>
+	<h4> Delete a instagram-feed.</h4>
 	<p> If the feed has expired or you need to change the feed that are specified in the database,
-		you can simply navigate to the edit-feed section and delete it.</p>
+		you can simply navigate to the delete-feed section and delete it.</p>
 
 </div>
 
@@ -30,8 +30,8 @@
 		if the profile is successfully authenticated, a text-field should pop up where it asks you to enter the page-ID.
 		The Page-id can be found at the bottom in the about-section of the page you administrate, and is usually a number.
 
-	<h4> Edit a Facebook-feed</h4>
-	<p> If you wish to delete the facebook-feed, you simply navigate to the edit-feed section and press the corresponding button.</p>
+	<h4> Delete a Facebook-feed</h4>
+	<p> If you wish to delete the facebook-feed, you simply navigate to the delete-feed section and press the corresponding button.</p>
 
 
 

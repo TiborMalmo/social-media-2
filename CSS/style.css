@@ -7,7 +7,7 @@ div.information {
     border-color: darkgrey;
 
     padding:0 20px;
-    height: 500px;
+    height: 550px;
     width: 350px;
 }
 div.information2 {
@@ -32,11 +32,7 @@ div.information2 {
 
     font-size: 23px;
 }
-/*Used on all the pages.*/
-div.wrap {
-    float: left;
 
-}
 /*line used for different information */
 #line {
     margin-left: 20px;

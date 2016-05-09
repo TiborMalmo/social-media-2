@@ -2,19 +2,15 @@
 
 	<h2 id="info"> Information </h2>
 	<hr>
+	<h4> How the instagram JSON-feed works:</h4>
+	<p>You need to enter the client ID and the client secret. This information can usually be found at the instagram developer page.</p>
 
-	<h3> You can find the instagram json in the table "instagram-values".</h3>
-	<h4> How to use Client ID and Client Secrets</h4>
-	<p>
-		Client ID and Client Secrets <br>
-		you can find the Client ID and Client Secret at the <br>developer page on either Instagram or
-		facebook.<br>
-		Copy these and put these inside the fields.
-	</p>
-	<hr>
-
+	<h4>Database tables:</h4>
+	<p>The information specified and given is saved on a local database with the tablenames:
+	<p id="underline">Instagram_settings:</p>primarly stores the Client ID and the client secret.
+	<p id="underline">Instagram_results:</p> consists of the JSON-code returned from a Instagram-feed.
+	<p id="underline">Instagram-access-token:</p> the token returned from the instagram-servers and is primarly used for getting a feed, but can be used for other things aswell.</p>
+	</div>
 
 
-	<h4>Specify feeds. </h4>
-	<p> You need to specify if it's either a facebook or a instagram feed.</p>
-</div>
+
