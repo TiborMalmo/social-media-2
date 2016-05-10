@@ -19,7 +19,7 @@ class social_media {
 		add_action( 'admin_menu', array( __CLASS__, 'create_plugin_menu' ) );
 		register_activation_hook( __FILE__, array( __CLASS__, 'my_activation' ) );
 		register_deactivation_hook( __FILE__, 'my_deactivation' );
-		add_action( 'my_hourly_event', array( __CLASS__, 'do_this_hourly' ) );
+		add_action( 'my_hourly_event', array( __CLASS__, 'update_feeds_hourly' ) );
 	}
 
 	public function admin_enqueue_files() {
@@ -352,6 +352,22 @@ class social_media {
 		echo "</div>";
 	}
 
+
+
+	static function redirect_facebook() {
+		if ( isset( $_POST['getpageid_submit'] ) ) {
+			update_option( 'page-id', $_POST['page-id'] );
+			$location = 'http://' . $_SERVER['HTTP_HOST'] . '/wp-admin/admin.php?page=facebook-feed-login&page-id=' . get_option( 'page-id' );
+			wp_redirect( $location );
+			exit;
+		}
+	}
+
+	public function facebook_API() {
+		include_once __DIR__ . '/facebook-php-sdk-v4-master/src/Facebook/autoload.php';
+		include_once __DIR__ . '/inc/facebook-auth-setup.php';
+	}
+
 	public function facebook_checkup() {
 		echo "<p>Database status:</p>";
 		echo "<p>JSON-result:</p>";
@@ -375,24 +391,9 @@ class social_media {
 
 	}
 
-	static function redirect_facebook() {
-		if ( isset( $_POST['getpageid_submit'] ) ) {
-			update_option( 'page-id', $_POST['page-id'] );
-			$location = 'http://' . $_SERVER['HTTP_HOST'] . '/wp-admin/admin.php?page=facebook-feed-login&page-id=' . get_option( 'page-id' );
-			wp_redirect( $location );
-			exit;
-		}
-	}
-
-	public function facebook_API() {
-		include_once __DIR__ . '/facebook-php-sdk-v4-master/src/Facebook/autoload.php';
-		include_once __DIR__ . '/inc/facebook-auth-setup.php';
-	}
 
 
-	/**LATER STUFF**/
-
-	public function do_this_hourly() {
+	public function update_feeds_hourly() {
 		echo self::DWWP_instagram_fetch_feed();
 	}
 
