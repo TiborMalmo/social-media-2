@@ -34,36 +34,5 @@ if ( isset( $_POST['submit_feed'] ) ) {
 	echo "<a href='" . $url . "'>fetch instagram code </a>";
 
 
-} ?>
+}
 
-<form method="post" action="">
-			<?php settings_fields( 'settings-group' ); ?>
-<?php do_settings_sections( 'settings-group' ); ?>
-<?php
-$DB = get_option( 'instagram_settings' )
-?>
-<table class="form-table">
-
-
-	<!--Declares and creates the client-id field. -->
-	<tr valign="top">
-		<th scope="row"><?php _e( 'Client ID:', 'instagram' ) ?></th>
-		<td><input type="text" name="client_id"/></td>
-	</tr>
-
-	<!-- Declares and creates the Client-secret field.-->
-	<tr valign="top">
-		<th scope="row"><?php _e( 'Client Secret:', 'instagram' ) ?></th>
-		<td><input type="text" name="client_secret"
-			/></td>
-	</tr>
-
-
-</table>
-	<br>
-	<br>
-
-	<!-- Input that saves the values specified in the instagram page-->
-	<input type="submit" class="btn btn-prime" name="submit_feed" value="<?php _e( 'Save' ) ?>">
-
-</form>

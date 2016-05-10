@@ -62,3 +62,6 @@ div.information2 {
 #underline {
     text-decoration: underline;
 }
+#wrap {
+    float:left;
+}

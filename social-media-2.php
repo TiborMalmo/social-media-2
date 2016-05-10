@@ -7,7 +7,7 @@ defined( 'ABSPATH' ) or die( 'Access denied' );
  * Plugin URI: http://www.iqq.se
  * Description: This is a simple plugin that converts a users Facebook-page or Instagram-feed to JSON-text and saves it in the database.
  * Author: Made by Tibor Lundberg, student intern @ IQQ.
- * Version: 0.0.2 alfa
+ * Version: 0.1.0 Beta
  */
 class social_media {
 	static function init() {
@@ -72,7 +72,7 @@ class social_media {
 	 */
 	public function page_add_instagram_feed() {
 		echo "<div class='wrap'>";
-		if(! empty( $_GET['code'])){
+		if ( ! empty( $_GET['code'] ) ) {
 			self::DWWP_instagram_api();
 
 		}
@@ -110,38 +110,42 @@ class social_media {
 
 		}
 		?>
-		<form method="post" action="">
-			<?php settings_fields( 'settings-group' ); ?>
-			<?php do_settings_sections( 'settings-group' ); ?>
-			<?php
-			$DB = get_option( 'instagram_settings' )
-			?>
-			<table class="form-table">
+		<div id="wrap">
+			<form method="post" action="">
+				<?php settings_fields( 'settings-group' ); ?>
+				<?php do_settings_sections( 'settings-group' ); ?>
+				<?php
+				$DB = get_option( 'instagram_settings' )
+				?>
+				<table class="form-table">
 
 
-				<!--Declares and creates the client-id field. -->
-				<tr valign="top">
-					<th scope="row"><?php _e( 'Client ID:', 'instagram' ) ?></th>
-					<td><input type="text" name="client_id"/></td>
-				</tr>
+					<!--Declares and creates the client-id field. -->
+					<tr valign="top">
+						<th scope="row"><?php _e( 'Client ID:', 'instagram' ) ?></th>
+						<td><input type="text" name="client_id"/></td>
+					</tr>
 
-				<!-- Declares and creates the Client-secret field.-->
-				<tr valign="top">
-					<th scope="row"><?php _e( 'Client Secret:', 'instagram' ) ?></th>
-					<td><input type="text" name="client_secret"
-						/></td>
-				</tr>
+					<!-- Declares and creates the Client-secret field.-->
+					<tr valign="top">
+						<th scope="row"><?php _e( 'Client Secret:', 'instagram' ) ?></th>
+						<td><input type="text" name="client_secret"
+							/></td>
+					</tr>
 
 
-			</table>
+				</table>
 
-			<br>
-			<br>
+				<br>
+				<br>
 
-			<!-- Input that saves the values specified in the instagram page-->
-			<input type="submit" class="btn btn-prime" name="submit_feed" value="<?php _e( 'Save' ) ?>">
+				<!-- Input that saves the values specified in the instagram page-->
+				<input type="submit" class="btn btn-prime" name="submit_feed" value="<?php _e( 'Save' ) ?>">
 
-		</form>
+			</form>
+		</div>
+
+		<br><br><br><br><br><br><br><br><br><br><br><br>
 		<b>Database status:</b>
 		<p>Database status - Instagram settings: <?php if ( get_option( 'instagram_settings' ) == true ) {
 				echo 'The Instagram settings is now in the database!';
@@ -175,64 +179,65 @@ class social_media {
 
 		// if the response code from instagram is accessable, start the method
 
-			// get the database table 'instagram settings'
-			$instagram_settings = get_option( 'instagram_settings' );
+		// get the database table 'instagram settings'
+		$instagram_settings = get_option( 'instagram_settings' );
 
-			// get the returned client id.
-			$get_client_id = $instagram_settings['client_id'];
-			// get the returned client secret.
+		// get the returned client id.
+		$get_client_id = $instagram_settings['client_id'];
+		// get the returned client secret.
 
-			$get_client_secret = $instagram_settings['client_secret'];
-			// code used in the code.php file.
-			$get_code = $_GET ['code'];
+		$get_client_secret = $instagram_settings['client_secret'];
+		// code used in the code.php file.
+		$get_code = $_GET ['code'];
 
-			// array that saves the values that are returned.
-			$args = array(
-				'body' => array(
-					'client_id'     => $get_client_id,
-					'client_secret' => $get_client_secret,
-					'code'          => $_GET['code'],
-					//grant type responds with the instagram scope.
-					'grant_type'    => 'authorization_code',
-					'redirect_uri'  => 'http://tibor.dev/wp-admin/admin.php?page=social-media-instagram-feed'
-				)
-			);
+		$location = 'http://' . $_SERVER['HTTP_HOST'] . '/wp-admin/admin.php?page=social-media-instagram-feed';
+		// array that saves the values that are returned.
+		$args = array(
+			'body' => array(
+				'client_id'     => $get_client_id,
+				'client_secret' => $get_client_secret,
+				'code'          => $_GET['code'],
+				//grant type responds with the instagram scope.
+				'grant_type'    => 'authorization_code',
+				'redirect_uri'  => $location
+			)
+		);
 
-			// specifies where to get the access-token.
-			$url = 'https://api.instagram.com/oauth/access_token';
-			// takes the array and posts it in the url.
-			$response = wp_remote_post( $url, $args );
+		// specifies where to get the access-token.
+		$url = 'https://api.instagram.com/oauth/access_token';
+		// takes the array and posts it in the url.
+		$response = wp_remote_post( $url, $args );
 
-			// If the instagram site responds correctly, then the access-token is saved.
-			if ( wp_remote_retrieve_response_code( $response ) === 200 ) {
+		// If the instagram site responds correctly, then the access-token is saved.
+		if ( wp_remote_retrieve_response_code( $response ) === 200 ) {
 
-				$body = wp_remote_retrieve_body( $response );
-				$body = json_decode( $body );
-				if ( ! empty( $body->access_token ) ) {
+			$body = wp_remote_retrieve_body( $response );
+			$body = json_decode( $body );
+			if ( ! empty( $body->access_token ) ) {
 
-					update_option( 'instagram-access-token', $body->access_token );
-
-				}
-
-			}
-
-			// validation, if it's not responding with code 200, the rest of the information is deleted.
-			if ( wp_remote_retrieve_response_code( $response ) !== 200 ) {
-
-				delete_options( 'instagram_settings' );
-				delete_options( 'instagram-access-token' );
-				delete_options( 'instagram_results' );
-
-				echo "<p>something went wrong. Please try again</p>";
+				update_option( 'instagram-access-token', $body->access_token );
 
 			}
-			echo "<p>Access-token fetched and saved in the db!</p>";
-			echo self::DWWP_instagram_fetch_feed();
+
+		}
+
+		// validation, if it's not responding with code 200, the rest of the information is deleted.
+		if ( wp_remote_retrieve_response_code( $response ) !== 200 ) {
+
+			delete_options( 'instagram_settings' );
+			delete_options( 'instagram-access-token' );
+			delete_options( 'instagram_results' );
+
+			echo "<p>something went wrong. Please try again</p>";
+
+		}
+		echo "<p>Access-token and JSON-feed fetched and saved in the db!</p>";
+		echo self::DWWP_instagram_fetch_feed();
 
 	}
 
 	// Access the json-text from the web-client into a new database row.
-	public function DWWP_instagram_fetch_feed(){
+	public function DWWP_instagram_fetch_feed() {
 
 		$access_token             = get_option( 'instagram-access-token' );
 		$get_json_text_ig         = 'https://api.instagram.com/v1/users/self/media/recent/?access_token=' . $access_token;
@@ -314,6 +319,7 @@ class social_media {
 		echo "<div class='wrap'>";
 		include_once __DIR__ . "/inc/delete-feeds.php";
 
+
 		echo "</div>";
 	}
 
@@ -372,7 +378,8 @@ class social_media {
 	static function redirect_facebook() {
 		if ( isset( $_POST['getpageid_submit'] ) ) {
 			update_option( 'page-id', $_POST['page-id'] );
-			wp_redirect( 'http://tibor.dev/wp-admin/admin.php?page=facebook-feed-login&page-id=' . get_option( 'page-id' ) );
+			$location = 'http://' . $_SERVER['HTTP_HOST'] . '/wp-admin/admin.php?page=facebook-feed-login&page-id=' . get_option( 'page-id' );
+			wp_redirect( $location );
 			exit;
 		}
 	}
