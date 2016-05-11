@@ -23,7 +23,7 @@
 
 <div id= "welcomemenu">
 	<h3 id ="feed-welcome-line"> Facebook feeds. </h3>
-	<p> Like the instagram JSON-feed, the facebook feed connects the user to a specific page that they are an administrator of.</p>
+	<p> Like the instagram JSON-feed, the facebook feed connects the user to a specific page and converts it to a json-feed. Unlike the instagram-feed, as long as you authenticated your facebook page- you can access a page. </p>
 
 	<h4> Add new Facebook feed.</h4>
 	<p> To convert the facebook page-feed, first of all, you need to authenticate your facebook profile.
